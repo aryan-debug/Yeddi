@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "./styles/header.module.css";
+import styles from "../styles/header.module.css";
 import { Inter } from 'next/font/google'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";

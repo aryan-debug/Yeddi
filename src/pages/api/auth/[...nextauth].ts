@@ -23,6 +23,7 @@ export interface GoogleProfile extends Record<string, any> {
 }
 
 export const authOptions = {
+  secret: process.env.AUTH_SECRET,
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
@@ -31,7 +32,7 @@ export const authOptions = {
     })
   ],
   callbacks: {
-      async signIn({ profile }: GoogleProfile) {
+      async signIn({ profile }) {
         try {
           const client = await clientPromise;
           const db = client.db("yeddi");

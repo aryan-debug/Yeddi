@@ -7,6 +7,7 @@
     height: max-content;
     border-radius: 5px;
     font-weight: bold;
-    scale: 1.5;
     cursor: pointer;
+    padding: 15px;
+    font-size: 1.5rem;
 }

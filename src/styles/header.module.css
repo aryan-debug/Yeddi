@@ -5,8 +5,10 @@
     align-items: center;
 }
 
+
 .logo{
     color: var(--primary);
+    text-decoration: none;
 }
 
 .search_bar{

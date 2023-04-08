@@ -16,7 +16,7 @@ export default function Header(){
     const {data: session} = useSession();
     return(
         <div className={`${styles.header} ${inter.className}`}>
-            <h2 className={styles.logo}>Yeddi</h2>
+            <Link href={"/"} className={styles.logo}><h2>Yeddi</h2></Link>
             <div className={styles.search_bar_container}>
                 <input className={styles.search_bar} placeholder="Search"/>
                 <FontAwesomeIcon icon={faSearch} size="xl" className={styles.search_icon}/>

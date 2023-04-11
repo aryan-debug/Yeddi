@@ -1,0 +1,29 @@
+.category_container{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 150px;
+    align-items: center;
+}
+
+.category_heading{
+    color:white;
+    font-size: 1.75rem;
+}
+
+.buttons{
+    display: flex;
+    gap: 20px;
+}
+
+.category_logo{
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.left{
+    display: flex;
+    align-items: center;
+    gap: 20px
+}

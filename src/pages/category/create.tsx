@@ -1,11 +1,9 @@
-import Button from "@/components/Button";
+
 import styles from "../../styles/create_category.module.css";
 import button_style from "../../styles/button.module.css";
 
 import { Inter } from 'next/font/google'
 import { useState } from "react";
-import { stringify } from "querystring";
-
 
 const inter = Inter({subsets: ["latin"]});
 

@@ -8,21 +8,32 @@ import Link from 'next/link';
 const inter = Inter({subsets: ["latin"]});
 
 interface Props {
-    name: string
+    name: string,
+    posts: string[]
 }
 
 
 function Category(props: Props){
-
+    console.log(props.posts)
     return(
         <div className={styles.category_container}>
-            <div className={styles.left}>
-                <div className={styles.category_logo}></div>
-                <h2 className={`${styles.category_heading} ${inter.className}`}>{props.name}</h2>
+            <div className={styles.info}>
+                <div className={styles.left}>
+                    <div className={styles.category_logo}></div>
+                    <h2 className={`${styles.category_heading} ${inter.className}`}>{props.name}</h2>
+                </div>
+                <div className={styles.buttons}>
+                    <Link href={`/category/${props.name}/post`}><button className = {button_styles.button}>Post</button></Link>
+                    <button className = {button_styles.button}>Follow</button>
+                </div>
             </div>
-            <div className={styles.buttons}>
-                <Link href={`/category/${props.name}/post`}><button className = {button_styles.button}>Post</button></Link>
-                <button className = {button_styles.button}>Follow</button>
+            <div className={styles.video_container}>
+                {props.posts.map((post, index) => {
+                    return <video className={styles.video} controls key = {index}>
+                                <source src={`../uploads/${post}`}></source>
+                           </video>
+                }
+                )}
             </div>
         </div>
     )
@@ -32,14 +43,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const category_name = context.params?.name;
     const client = await clientPromise;
     const db = client.db("yeddi");
-    const category_exists = await db.collection("categories").countDocuments({name: category_name}) > 0
+    const collection = db.collection("categories")
+    const category_exists = await collection.countDocuments({name: category_name}) > 0
     if(!category_exists){
         return{
             notFound: true
         }
     }
+
+    const query = await collection.findOne({name: category_name}, {projection: {posts: 1, _id: 0}});
+    const posts = query?.posts;
+    console.log(posts)
     return {
-        props: { name: category_name }
+        props: { name: category_name, posts }
       }
 }
 

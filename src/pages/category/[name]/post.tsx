@@ -1,14 +1,24 @@
 import React, { ChangeEvent, useState } from "react"
+import { useRouter } from 'next/router'
+import styles from "../../../styles/post_video.module.css";
+import { Inter } from "next/font/google";
+import button_style from "../../../styles/button.module.css";
+
+const inter = Inter({subsets: ["latin"]});
 
 export default function CategoryPost(){
     const [file, setFile] = useState<File>();
-
+    const router = useRouter()
+    const { name } = router.query;
     async function uploadFile(event: React.SyntheticEvent){
         event.preventDefault();
         if(file){
             const formData = new FormData();
             formData.append("file", file);
-            await fetch("/api/category/post", {
+            if(name){
+                formData.append("categoryName", name.toString());
+            }
+            const response = await fetch("/api/category/post", {
                 method: "POST",
                 body: formData,
             })
@@ -21,11 +31,12 @@ export default function CategoryPost(){
         }
     }
 
-    return <div>
-        <h1>Post A Video</h1>
-        <form method="POST" onSubmit={(event: React.SyntheticEvent) => uploadFile(event)} encType="multipart/form-data">
-        <input type="file" id="myFile" name="filename" onChange={handleChange}/>
-        <input type="submit"/>
+    return <div className={`${inter.className} ${styles.form_container}`}>
+        <h1 className={styles.heading}>Upload A Video</h1>
+        <h3 className={styles.category_name}>{router.query.name}</h3>
+        <form method="POST" className = {styles.category_form} onSubmit={(event: React.SyntheticEvent) => uploadFile(event)} encType="multipart/form-data">
+            <input className={styles.file_input} type="file" id="myFile" name="filename" onChange={handleChange} />
+            <button type="submit" className={button_style.button}>Upload</button>
         </form>
     </div>
 }

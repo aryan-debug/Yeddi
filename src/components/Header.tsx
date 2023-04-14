@@ -7,18 +7,27 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 import Button from "./Button";
+import { useRouter } from "next/router";
 
 const inter = Inter({subsets: ["latin"]});
 
 export default function Header(){
     const [profileClicked, setProfileClicked] = useState(false);
+    const [category, setCategory] = useState("");
+    const router = useRouter();
+
+    function searchCategory(event: React.SyntheticEvent){
+        router.push(`/category/${category}`);
+    }
 
     const {data: session} = useSession();
     return(
         <div className={`${styles.header} ${inter.className}`}>
             <Link href={"/"} className={styles.logo}><h2>Yeddi</h2></Link>
             <div className={styles.search_bar_container}>
-                <input className={styles.search_bar} placeholder="Search"/>
+                <form onSubmit={searchCategory}>
+                    <input className={styles.search_bar} placeholder="Search" onChange={(e) => setCategory(e.target.value)}/>
+                </form>
                 <FontAwesomeIcon icon={faSearch} size="xl" className={styles.search_icon}/>
             </div>
             {session?.user ? 

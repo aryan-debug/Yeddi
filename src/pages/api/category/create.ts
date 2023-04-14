@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try{
             const client = await clientPromise;
             const db = client.db("yeddi");
-            await db.collection("categories").insertOne({name: req.body.name})
+            await db.collection("categories").insertOne({name: req.body.name, posts: []})
         }
         catch (e){
             console.log(`Error: ${e}`);

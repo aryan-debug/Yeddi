@@ -26,6 +26,10 @@ export const authOptions = {
           console.error(e);
       }
         return true;
+      },
+      async session({ session, token }){
+        session.user.sub = token.sub
+        return session
       }
   }
 }
